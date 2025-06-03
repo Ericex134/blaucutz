@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="BLAU CUTZ - Fresh cuts, clean fades, street-approved barbershop. Book your appointment today.">
+    <meta name="keywords" content="barbershop, haircuts, fades, brooklyn, barber, fresh cuts">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="BLAU CUTZ - Fresh Cuts & Clean Fades">
+    <meta property="og:description" content="Street-approved barbershop delivering fresh cuts and clean fades. Book your appointment today.">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="BLAU CUTZ - Fresh Cuts & Clean Fades">
+    <meta property="twitter:description" content="Street-approved barbershop delivering fresh cuts and clean fades. Book your appointment today.">
+    
+    <title>BLAU CUTZ - Fresh Cuts & Clean Fades</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@300;400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="hero-video.mp4" as="video" type="video/mp4">
+</head>
+<body>
+    <!-- Mobile Loading Screen -->
+    <div class="mobile-loader" id="mobile-loader">
+        <div class="loader-content">
+            <div class="loader-logo">BLAU<span class="accent">CUTZ</span></div>
+            <div class="loader-spinner"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>BLAU<span class="accent">CUTZ</span></h2>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link" data-text="HOME">HOME</a>
+                <a href="#services" class="nav-link" data-text="CUTS">CUTS</a>
+                <a href="#gallery" class="nav-link" data-text="WORK">WORK</a>
+                <a href="#testimonials" class="nav-link" data-text="REVIEWS">REVIEWS</a>
+                <a href="#contact" class="nav-link" data-text="HIT US UP">HIT US UP</a>
+                <!-- Mobile-only book button in menu -->
+                <a href="https://calendly.com/brady-lau23" target="_blank" class="nav-link mobile-book-link">
+                    <i class="fas fa-calendar-alt"></i> BOOK NOW
+                </a>
+            </div>
+            <div class="nav-actions">
+                <a href="https://calendly.com/brady-lau23" target="_blank" class="nav-book-btn">
+                    <i class="fas fa-calendar-alt"></i>
+                    BOOK NOW
+                </a>
+                <div class="nav-toggle" id="nav-toggle" aria-label="Toggle mobile menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Enhanced Floating Action Button with better mobile positioning -->
+    <a href="https://calendly.com/brady-lau23" target="_blank" class="fab-book" id="fab-book" aria-label="Book appointment">
+        <i class="fas fa-calendar-alt"></i>
+        <span class="fab-text">BOOK</span>
+        <div class="fab-ripple"></div>
+    </a>
+
+    <!-- Hero Section with Mobile Optimization -->
+    <section id="home" class="hero">
+        <!-- Mobile-optimized Video Background -->
+        <video autoplay muted loop playsinline class="hero-video" preload="metadata">
+            <source src="hero-video.mp4" type="video/mp4">
+            <!-- Mobile fallback -->
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">FRESH CUTS<br><span class="hero-subtitle-inline">STREET APPROVED</span></h1>
+                <div class="hero-buttons">
+                    <a href="https://calendly.com/brady-lau23" target="_blank" class="btn btn-primary" data-action="book">
+                        <span class="btn-text">BOOK NOW</span>
+                        <div class="btn-ripple"></div>
+                    </a>
+                    <a href="#gallery" class="btn btn-ghost" data-action="gallery">
+                        <span class="btn-text">SEE THE WORK</span>
+                        <div class="btn-ripple"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile scroll indicator -->
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- Services & Pricing with Mobile-First Design -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>WHAT WE DO</h2>
+                <p class="section-subtitle">Simple. Clean. Fresh.</p>
+            </div>
+            <div class="services-mobile">
+                <div class="service-card" data-service="cuts">
+                    <div class="service-icon">
+                        <i class="fas fa-cut"></i>
+                    </div>
+                    <h3>CUTS</h3>
+                    <span class="price">$25</span>
+                    <p class="service-desc">Fresh fades, clean lines, street-approved styles</p>
+                    <div class="service-ripple"></div>
+                </div>
+                <div class="service-card" data-service="design">
+                    <div class="service-icon">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <h3>DESIGN</h3>
+                    <span class="price">$5</span>
+                    <p class="service-desc">Custom hair art, logos, and creative designs</p>
+                    <div class="service-ripple"></div>
+                </div>
+                <div class="service-card" data-service="products">
+                    <div class="service-icon">
+                        <i class="fas fa-spray-can"></i>
+                    </div>
+                    <h3>PRODUCTS</h3>
+                    <span class="price">$20</span>
+                    <p class="service-desc">Premium styling products and aftercare</p>
+                    <div class="service-ripple"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Gallery with Touch Optimization -->
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <div class="section-header dark">
+                <h2>THE PROOF</h2>
+                <p class="section-subtitle">See what happens when skill meets style</p>
+            </div>
+            <div class="gallery-mobile-container">
+                <div class="gallery-mobile-scroll" id="gallery-mobile-scroll">
+                    <div class="gallery-mobile-item" data-category="fade">
+                        <div class="gallery-mobile-placeholder">
+                            <!-- REPLACE THIS SECTION WITH YOUR IMAGE -->
+                            <img src="./cut3.png" alt="Fresh Fade" loading="lazy" />
+                            <!-- END REPLACE SECTION -->
+                            <div class="gallery-overlay">
+                                <button class="gallery-view-btn" aria-label="View image">
+                                    <i class="fas fa-expand"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-mobile-item" data-category="beard">
+                        <div class="gallery-mobile-placeholder">
+                            <!-- REPLACE THIS SECTION WITH YOUR IMAGE -->
+                            <img src="./cut1.png" alt="Beard Art" loading="lazy" />
+                            <!-- END REPLACE SECTION -->
+                            <div class="gallery-overlay">
+                                <button class="gallery-view-btn" aria-label="View image">
+                                    <i class="fas fa-expand"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-mobile-item" data-category="fade">
+                        <div class="gallery-mobile-placeholder">
+                            <!-- REPLACE THIS SECTION WITH YOUR IMAGE -->
+                            <img src="./cut2.png" alt="Skin Fade" loading="lazy" />
+                            <!-- END REPLACE SECTION -->
+                            <div class="gallery-overlay">
+                                <button class="gallery-view-btn" aria-label="View image">
+                                    <i class="fas fa-expand"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-mobile-item" data-category="classic">
+                        <div class="gallery-mobile-placeholder">
+                            <!-- REPLACE THIS SECTION WITH YOUR IMAGE -->
+                            <img src="./cut4.png" alt="Classic Cut" loading="lazy" />
+                            <!-- END REPLACE SECTION -->
+                            <div class="gallery-overlay">
+                                <button class="gallery-view-btn" aria-label="View image">
+                                    <i class="fas fa-expand"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-mobile-item" data-category="texture">
+                        <div class="gallery-mobile-placeholder">
+                            <!-- REPLACE THIS SECTION WITH YOUR IMAGE -->
+                            <img src="./cut5.png" alt="Texture Work" loading="lazy" />
+                            <!-- END REPLACE SECTION -->
+                            <div class="gallery-overlay">
+                                <button class="gallery-view-btn" aria-label="View image">
+                                    <i class="fas fa-expand"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-mobile-item" data-category="lineup">
+                        <div class="gallery-mobile-placeholder">
+                            <!-- REPLACE THIS SECTION WITH YOUR IMAGE -->
+                            <img src="./cut6.png" alt="Lineup" loading="lazy" />
+                            <!-- END REPLACE SECTION -->
+                            <div class="gallery-overlay">
+                                <button class="gallery-view-btn" aria-label="View image">
+                                    <i class="fas fa-expand"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Mobile-friendly progress dots -->
+                <div class="gallery-dots" id="gallery-dots"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>WHAT THE STREETS SAY</h2>
+                <p class="section-subtitle">Real talk from real people</p>
+            </div>
+            <div class="testimonials-scroll-container">
+                <div class="testimonials-scroll">
+                    <div class="testimonial-card">
+                        <div class="testimonial-image">
+                            <div class="image-placeholder">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </div>
+                        <div class="testimonial-content">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="testimonial-text">"Walked in looking basic, walked out looking like a whole different person. Brady knows what he's doing."</p>
+                            <div class="testimonial-author">
+                                <span class="name">Eric</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-image">
+                            <div class="image-placeholder">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </div>
+                        <div class="testimonial-content">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="testimonial-text">"Clean fade, best barber in town."</p>
+                            <div class="testimonial-author">
+                                <span class="name">Malik</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-image">
+                            <div class="image-placeholder">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </div>
+                        <div class="testimonial-content">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="testimonial-text">"Worth every dollar, best value barber in the city."</p>
+                            <div class="testimonial-author">
+                                <span class="name">Andy</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-image">
+                            <div class="image-placeholder">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </div>
+                        <div class="testimonial-content">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="testimonial-text">"Best cut I've ever had. The attention to detail is insane."</p>
+                            <div class="testimonial-author">
+                                <span class="name">Thomas</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-image">
+                            <div class="image-placeholder">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </div>
+                        <div class="testimonial-content">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="testimonial-text">"Professional service and great vibes the whole time."</p>
+                            <div class="testimonial-author">
+                                <span class="name">Sean</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="testimonials-nav testimonials-prev" aria-label="Previous">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="testimonials-nav testimonials-next" aria-label="Next">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking CTA -->
+    <section id="booking" class="booking">
+        <div class="container">
+            <div class="booking-content">
+                <h2>READY TO GET FRESH?</h2>
+                <p>Don't wait. Book your spot and step up your game.</p>
+                <a href="https://calendly.com/brady-lau23" target="_blank" class="btn btn-large btn-primary">
+                    <i class="fas fa-calendar-alt"></i>
+                    BOOK YOUR SLOT
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="contact-content">
+                <h3>FOLLOW THE MOVEMENT</h3>
+                <p>See the daily freshness. Tag us in your cuts.</p>
+                <div class="social-links">
+                    <a href="https://instagram.com/blcuttz" target="_blank" class="social-link instagram">
+                        <i class="fab fa-instagram"></i>
+                        <span>@blaucutz</span>
+                    </a>
+                    <a href="https://calendly.com/brady-lau23" target="_blank" class="social-link booking">
+                        <i class="fas fa-scissors"></i>
+                        <span>BOOK NOW</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Mobile-First Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <h3>BLAU<span class="accent">CUTZ</span></h3>
+                    <p class="footer-tagline">STAY FRESH</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#home">HOME</a>
+                    <a href="#services">CUTS</a>
+                    <a href="#gallery">WORK</a>
+                    <a href="#contact">CONTACT</a>
+                </div>
+                <!-- Mobile-optimized social links -->
+                <div class="footer-social">
+                    <a href="https://instagram.com/blaucutz" target="_blank" class="footer-social-link" aria-label="Follow us on Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://calendly.com/brady-lau23" target="_blank" class="footer-social-link" aria-label="Book appointment">
+                        <i class="fas fa-calendar-alt"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 BLAU CUTZ. STAY FRESH.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Modal for Gallery (optional enhancement) -->
+    <div class="mobile-modal" id="mobile-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close" aria-label="Close modal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-body" id="modal-body">
+                <!-- Dynamic content -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
