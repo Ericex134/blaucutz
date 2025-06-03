@@ -581,16 +581,33 @@ function initMobileNavigation() {
     });
 }
 
-// Mobile-Optimized Gallery with Touch Gestures
+// Enhanced Mobile Gallery with Infinite Scroll and Smooth Animation
 function initMobileGallery() {
     const galleryScroll = document.getElementById('gallery-mobile-scroll');
     const galleryDots = document.getElementById('gallery-dots');
     const galleryItems = document.querySelectorAll('.gallery-mobile-item');
 
-    if (!galleryScroll || !galleryDots) return;
+    if (!galleryScroll || !galleryDots || galleryItems.length === 0) return;
 
-    // Create dots
-    galleryItems.forEach((_, index) => {
+    // Clone items for infinite scroll
+    const originalItems = Array.from(galleryItems);
+    
+    // Add clones before and after for seamless infinite scroll
+    originalItems.forEach(item => {
+        const cloneBefore = item.cloneNode(true);
+        const cloneAfter = item.cloneNode(true);
+        cloneBefore.classList.add('gallery-clone');
+        cloneAfter.classList.add('gallery-clone');
+        galleryScroll.insertBefore(cloneBefore, galleryScroll.firstChild);
+        galleryScroll.appendChild(cloneAfter);
+    });
+
+    const allItems = document.querySelectorAll('.gallery-mobile-item');
+    const itemWidth = 300 + 24; // item width + gap
+    const totalItems = originalItems.length;
+    
+    // Create dots (only for original items)
+    originalItems.forEach((_, index) => {
         const dot = document.createElement('div');
         dot.className = 'gallery-dot';
         if (index === 0) dot.classList.add('active');
@@ -599,55 +616,143 @@ function initMobileGallery() {
     });
 
     const dots = document.querySelectorAll('.gallery-dot');
+    let currentIndex = 0;
+    let isScrolling = false;
 
-    // Update active dot on scroll
-    let scrollTimeout;
-    galleryScroll.addEventListener('scroll', () => {
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-            updateActiveDot();
-        }, 100);
-    });
+    // Set initial position (start at first real item, not clone)
+    galleryScroll.scrollLeft = totalItems * itemWidth;
 
-    function updateActiveDot() {
-        const scrollLeft = galleryScroll.scrollLeft;
-        const itemWidth = galleryItems[0].offsetWidth + 24; // 24px gap
-        const activeIndex = Math.round(scrollLeft / itemWidth);
+    function updateActiveDot(index) {
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+        });
+    }
+
+    function scrollToItem(index, smooth = true) {
+        if (isScrolling) return;
         
-        dots.forEach((dot, index) => {
-            dot.classList.toggle('active', index === activeIndex);
-        });
-    }
-
-    function scrollToItem(index) {
-        const itemWidth = galleryItems[0].offsetWidth + 24;
+        const targetScroll = (totalItems + index) * itemWidth;
         galleryScroll.scrollTo({
-            left: index * itemWidth,
-            behavior: 'smooth'
+            left: targetScroll,
+            behavior: smooth ? 'smooth' : 'auto'
         });
+        
+        currentIndex = index;
+        updateActiveDot(index);
     }
 
-    // Touch swipe enhancement
-    let startX, scrollStart, isDragging = false;
+    // Enhanced touch/scroll handling with momentum
+    let scrollTimeout;
+    let touchStartX = 0;
+    let touchStartScrollLeft = 0;
+    let isUserScrolling = false;
 
     galleryScroll.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-        scrollStart = galleryScroll.scrollLeft;
-        isDragging = true;
+        touchStartX = e.touches[0].clientX;
+        touchStartScrollLeft = galleryScroll.scrollLeft;
+        isUserScrolling = true;
     }, { passive: true });
 
     galleryScroll.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
+        if (!isUserScrolling) return;
         
-        const currentX = e.touches[0].clientX;
-        const diff = startX - currentX;
-        galleryScroll.scrollLeft = scrollStart + diff;
+        const touchX = e.touches[0].clientX;
+        const diff = touchStartX - touchX;
+        galleryScroll.scrollLeft = touchStartScrollLeft + diff;
     }, { passive: true });
 
     galleryScroll.addEventListener('touchend', () => {
-        isDragging = false;
-        updateActiveDot();
+        isUserScrolling = false;
+        handleScrollEnd();
     });
+
+    galleryScroll.addEventListener('scroll', () => {
+        if (isUserScrolling) return;
+        
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            handleScrollEnd();
+        }, 100);
+    });
+
+    function handleScrollEnd() {
+        if (isScrolling) return;
+        
+        const scrollLeft = galleryScroll.scrollLeft;
+        let newIndex = Math.round(scrollLeft / itemWidth) - totalItems;
+        
+        // Handle infinite scroll wrapping
+        if (newIndex < 0) {
+            // Scrolled past beginning, wrap to end
+            newIndex = totalItems - 1;
+            isScrolling = true;
+            galleryScroll.scrollLeft = (totalItems * 2 - 1) * itemWidth;
+            setTimeout(() => { isScrolling = false; }, 50);
+        } else if (newIndex >= totalItems) {
+            // Scrolled past end, wrap to beginning
+            newIndex = 0;
+            isScrolling = true;
+            galleryScroll.scrollLeft = totalItems * itemWidth;
+            setTimeout(() => { isScrolling = false; }, 50);
+        }
+        
+        // Snap to nearest item with smooth animation
+        if (!isScrolling) {
+            const targetScroll = (totalItems + newIndex) * itemWidth;
+            if (Math.abs(galleryScroll.scrollLeft - targetScroll) > 10) {
+                galleryScroll.scrollTo({
+                    left: targetScroll,
+                    behavior: 'smooth'
+                });
+            }
+        }
+        
+        currentIndex = newIndex;
+        updateActiveDot(currentIndex);
+    }
+
+    // Auto-scroll functionality (optional - can be enabled)
+    let autoScrollInterval;
+    
+    function startAutoScroll() {
+        autoScrollInterval = setInterval(() => {
+            if (!isUserScrolling && !isScrolling) {
+                const nextIndex = (currentIndex + 1) % totalItems;
+                scrollToItem(nextIndex);
+            }
+        }, 4000); // Auto-scroll every 4 seconds
+    }
+
+    function stopAutoScroll() {
+        clearInterval(autoScrollInterval);
+    }
+
+    // Enable auto-scroll when not interacting
+    galleryScroll.addEventListener('mouseenter', stopAutoScroll);
+    galleryScroll.addEventListener('mouseleave', startAutoScroll);
+    galleryScroll.addEventListener('touchstart', stopAutoScroll);
+    
+    // Start auto-scroll after a delay
+    setTimeout(startAutoScroll, 3000);
+
+    // Improved momentum scrolling for iOS
+    if (navigator.userAgent.includes('iPhone') || navigator.userAgent.includes('iPad')) {
+        galleryScroll.style.webkitOverflowScrolling = 'touch';
+        galleryScroll.style.scrollSnapType = 'x mandatory';
+    }
+
+    // Performance optimization - pause animations when not visible
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                startAutoScroll();
+            } else {
+                stopAutoScroll();
+            }
+        });
+    });
+
+    observer.observe(galleryScroll);
 }
 
 // Mobile Interaction Enhancements
@@ -679,17 +784,37 @@ function initMobileInteractions() {
         });
     });
 
-    // Gallery item interactions
+    // Enhanced gallery item interactions (simplified)
     document.querySelectorAll('.gallery-mobile-item').forEach(item => {
         item.addEventListener('click', function() {
-            const category = this.dataset.category;
             if (navigator.vibrate) {
                 navigator.vibrate(30);
             }
             
-            // Could trigger modal or action here
-            console.log('Gallery item clicked:', category);
+            // Subtle visual feedback
+            this.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 200);
         });
+    });
+
+    // Add smooth scroll momentum for better mobile experience
+    document.querySelectorAll('.gallery-mobile-scroll, .testimonials-scroll').forEach(scrollContainer => {
+        let isScrolling = false;
+        let scrollTimer = null;
+
+        scrollContainer.addEventListener('scroll', () => {
+            if (!isScrolling) {
+                scrollContainer.style.scrollBehavior = 'auto';
+            }
+            
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(() => {
+                scrollContainer.style.scrollBehavior = 'smooth';
+                isScrolling = false;
+            }, 200);
+        }, { passive: true });
     });
 }
 
